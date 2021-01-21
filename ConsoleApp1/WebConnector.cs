@@ -15,8 +15,8 @@ namespace ConsoleApp1
         {
             var proxyObjext = ProxyManager.GetProxy();
             var proxy = new WebProxy();
-                proxy.Address = new Uri($"http://12.229.217.226:55443");
-                //proxy.Address = new Uri($"http://{proxyObjext.data[0].ip}:{proxyObjext.data[0].port}");
+                //proxy.Address = new Uri($"http://12.229.217.226:55443");
+                proxy.Address = new Uri($"http://{proxyObjext.data[0].ip}:{proxyObjext.data[0].port}");
 
 
             var httpClientHandler = new HttpClientHandler();
