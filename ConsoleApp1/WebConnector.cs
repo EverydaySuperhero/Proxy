@@ -11,17 +11,20 @@ namespace ConsoleApp1
 
         static int Timeout = 10;
         const string APP_PATH = null;
-        private static HttpClient CreateClient()
+        private static HttpClient CreateClient(ProxyObject proxyObject = null)
         {
-            var proxyObjext = ProxyManager.GetProxy();
-            var proxy = new WebProxy();
-                //proxy.Address = new Uri($"http://12.229.217.226:55443");
-                proxy.Address = new Uri($"http://{proxyObjext.data[0].ip}:{proxyObjext.data[0].port}");
-
 
             var httpClientHandler = new HttpClientHandler();
-                httpClientHandler.Proxy = proxy;
 
+
+            var proxyObjext = ProxyManager.GetProxy();
+            if (proxyObject != null)
+            {
+                var proxy = new WebProxy();
+                //proxy.Address = new Uri($"http://12.229.217.226:55443");
+                proxy.Address = new Uri($"http://{proxyObjext.data[0].ip}:{proxyObjext.data[0].port}");
+                httpClientHandler.Proxy = proxy;
+            }
 
             return new HttpClient(handler: httpClientHandler, disposeHandler: true)
             {
@@ -37,7 +40,7 @@ namespace ConsoleApp1
                 {
                     var addr = APP_PATH + url;
                     var response = client.GetAsync(addr).Result;
-                     var result = response.Content.ReadAsStringAsync().Result;
+                    var result = response.Content.ReadAsStringAsync().Result;
                     return result;
                 }
                 catch (Exception e)
